@@ -1,6 +1,8 @@
+// Good rule set 1
 let rules = {
   yellow: {
     follow: [
+      'red',
       'yellow'
     ],
     flee: [
@@ -9,8 +11,6 @@ let rules = {
   },
   red: {
     follow: [
-      'yellow',
-      'blue',
       'red'
     ],
     flee: [
@@ -19,21 +19,21 @@ let rules = {
   },
   blue: {
     follow: [
-      'yellow',
-      'green'
+      'blue',
+      'yellow'
     ],
     flee: [
       'red',
-      'blue'
+      'green'
     ]
   },
   green: {
     follow: [
-      'red',
-      'yellow'
+      'yellow',
+      'red'
     ],
     flee: [
-      'blue'
+      'green'
     ]
   }
 }

@@ -1,8 +1,7 @@
 let wnx = window.innerWidth;
 let wny = window.innerHeight;
 
-
-let nb = 0;
+let population = 100;
 
 let cells = {
   blue: [],
@@ -18,128 +17,94 @@ let allPos = {
   yellow: []
 }
 
-let s = 200;
+let s = 50;
 let dev = false;
 
-function keyPressed() {
-  if (key === '1') {
-    let x = mouseX - wnx / 2;
-    let y = mouseY - wny / 2;
-    allPos.red.push({
-      x: x,
-      y: y
-    });
-    let type = 'red'
-    cells[type].push(new Cell(x, y, type));
-  } else if (key === '2') {
-    let x = mouseX - wnx / 2;
-    let y = mouseY - wny / 2;
-    allPos.red.push({
-      x: x,
-      y: y
-    });
-    let type = 'green'
-    cells[type].push(new Cell(x, y, type));
-  } else if (key === '3') {
-    let x = mouseX - wnx / 2;
-    let y = mouseY - wny / 2;
-    allPos.red.push({
-      x: x,
-      y: y
-    });
-    let type = 'blue'
-    cells[type].push(new Cell(x, y, type));
-  } else if (key === '4') {
-    let x = mouseX - wnx / 2;
-    let y = mouseY - wny / 2;
-    allPos.red.push({
-      x: x,
-      y: y
-    });
-    let type = 'yellow'
-    cells[type].push(new Cell(x, y, type));
+let time = 0;
+let count = 0;
+let index = 0;
+
+function reset(seed) {
+  time = 0;
+  count = 0;
+  cells = {
+    blue: [],
+    red: [],
+    green: [],
+    yellow: []
+  }
+  if (seed !== undefined) {
+    allPos = seed.positions;
+  } else {
+    allPos = {
+      blue: [],
+      red: [],
+      green: [],
+      yellow: []
+    }
+  }
+  for (let pos in allPos) {
+    let elem = allPos[pos];
+    let nb
+    if (seed == undefined) {
+      nb = population;
+    } else {
+      nb = elem.length;
+    }
+    for (let i = 0; i < nb; i++) {
+      let type = pos;
+      if (seed === undefined) {
+        let x = random(-s, s);
+        let y = random(-s, s);
+        allPos[pos].push({
+          x: x,
+          y: y
+        });
+        cells[type].push(new Cell(x, y, type));
+      } else {
+        cells[type].push(new Cell(allPos[pos][i].x, allPos[pos][i].y, type));
+      }
+
+    }
   }
 }
+let render = true;
+let cycles = 1;
 
 function setup() {
   createCanvas(wnx, wny);
-  for (let i = 0; i < nb; i++) {
-    let x = random(-s, s);
-    let y = random(-s, s);
-    allPos.red.push({
-      x: x,
-      y: y
-    });
-    let type = 'red'
-    cells[type].push(new Cell(x, y, type));
-  }
-  for (let i = 0; i < nb; i++) {
-    let x = random(-s, s);
-    let y = random(-s, s);
-    allPos.blue.push({
-      x: x,
-      y: y
-    });
-    let type = 'blue';
-    cells[type].push(new Cell(x, y, type));
-  }
-  for (let i = 0; i < nb; i++) {
-    let x = random(-s, s);
-    let y = random(-s, s);
-    allPos.green.push({
-      x: x,
-      y: y
-    });
-    let type = 'green';
-    cells[type].push(new Cell(x, y, type));
-  }
-  for (let i = 0; i < nb; i++) {
-    let x = random(-s / 4, s / 4);
-    let y = random(-s / 4, s / 4);
-    allPos.yellow.push({
-      x: x,
-      y: y
-    });
-    let type = 'yellow';
-    cells[type].push(new Cell(x, y, type));
-  }
-  console.log('Here is the seed')
-  console.log({ positions: allPos, rules: rules });
+  reset();
 }
 
-let time = 0;
 
 function draw() {
   background(34);
   translate(wnx / 2, wny / 2)
-  let all = cells.red.concat(cells.green.concat(cells.blue.concat(cells.yellow)));
-  for (let i = 0; i < cells.blue.length; i++) {
-    cells.blue[i].interact(all, rules);
-    cells.blue[i].separate(all);
-    //  cells.blue[i].setDes();
-    cells.blue[i].update(time);
-    cells.blue[i].render();
+  for (let h = 0; h < cycles; h++) {
+    let all = cells.red.concat(cells.green.concat(cells.blue.concat(cells.yellow)));
+
+    for (let type in cells) {
+      for (let i = 0; i < cells[type].length; i++) {
+        let cell = cells[type][i];
+        if (cell.state === 'Living') {
+          cell.separate(all);
+          cell.interact(all, rules, time, i);
+          if (render == true) {
+            cell.render();
+          }
+          count = cell.checkState(i, count);
+        }
+      }
+    }
+
+    if (count >= allPos.blue.length + allPos.green.length + allPos.red.length + allPos.yellow.length - 20) {
+      console.log('Simulation ' + index + ' finished at ' + time + 'ms')
+      console.log('Here is the seed:')
+      console.log({ positions: allPos, rules: rules });
+      index++;
+      reset();
+
+    }
+    time++;
   }
-  for (let i = 0; i < cells.green.length; i++) {
-    cells.green[i].interact(all, rules);
-    cells.green[i].separate(all);
-    //  cells.red[i].setDes();
-    cells.green[i].update(time);
-    cells.green[i].render();
-  }
-  for (let i = 0; i < cells.red.length; i++) {
-    cells.red[i].interact(all, rules);
-    cells.red[i].separate(all);
-    //  cells.red[i].setDes();
-    cells.red[i].update(time);
-    cells.red[i].render();
-  }
-  for (let i = 0; i < cells.yellow.length; i++) {
-    cells.yellow[i].interact(all, rules);
-    cells.yellow[i].separate(all);
-    //  cells.red[i].setDes();
-    cells.yellow[i].update(time);
-    cells.yellow[i].render();
-  }
-  time++;
 }

@@ -1,5 +1,6 @@
 class Cell {
   constructor(x, y, type) {
+    let m = 0;
     this.pos = createVector(x, y);
     this.acc = createVector(0, 0);
     this.vel = createVector(0, 0);
@@ -7,18 +8,20 @@ class Cell {
     this.heartbeat = 0;
     this.freq = random(100, 160);
 
-    this.des = createVector(random(-s * 2, s * 2), random(-s * 2, s * 2));
+    this.des = createVector(0, 0);
     this.size = 6;
 
-    this.maxForce = 2;
+    this.maxForce = 5;
     this.maxVelocity = 2;
 
-    this.separation = 6;
+    this.separation = 5;
 
     this.type = type;
     this.id = '#' + JSON.stringify(round(random(1000000, 9999999)));
 
-    this.perception = 256;
+    this.state = 'Living';
+
+    this.perception = 24;
     let c;
     if (type === 'blue') {
       c = color(0, 200, 255, 200);
@@ -60,62 +63,99 @@ class Cell {
 
     if (total > 0) {
       steering.div(total);
-      steering.setMag(this.maxVelocity);
+      steering.setMag(this.maxVelocity * 10000);
       steering.sub(this.vel);
-      steering.limit(this.maxForce);
+      steering.limit(this.maxForce * 10000);
     }
     this.acc.add(steering);
   }
-  interact(others, rules) {
+  interact(others, rules, time, i) {
     for (let rule in rules) {
       if (rule === this.type) {
         let r = rules[rule];
 
-        let closest = this.findClosest(others, this.perception);
-        let change = createVector(0, 0);
+        let closest = this.allInProximity(others, this.perception);
+
         for (let c = 0; c < r.follow.length; c++) {
           let type = r.follow[c];
-          if (type === closest.type) {
-            // Go follow
-            change.add(closest.pos.x, closest.pos.y);
-            let diff = p5.Vector.sub(change, this.pos);
-            change.mult(0);
-            this.acc.add(diff.setMag(this.maxForce * this.heartbeat));
-          }
-        }
-        for (let c = 0; c < r.flee.length; c++) {
-          let type = r.follow[c];
-          closest = this.findClosest(others, this.perception / 2);
-          if (closest !== 'empty') {
-            if (type === closest.type) {
-              // Flee
-              change.add(-1 * (closest.pos.x - this.pos.x), -1 * (closest.pos.y - this.pos.y)); // Flee
+          for (let j = 0; j < closest.length; j++) {
+            let cell = closest[j];
+            if (type === cell.type) {
+              let change = createVector(0, 0);
+              // Go follow
+              change.add(cell.pos.x, cell.pos.y);
               let diff = p5.Vector.sub(change, this.pos);
-              change.mult(0);
               this.acc.add(diff.setMag(this.maxForce * this.heartbeat));
+
             }
           }
         }
-        change.add(this.pos.x + random(-this.search, this.search), this.pos.y + random(-this.search, this.search));
-        let diff = p5.Vector.sub(change, this.pos);
-        change.mult(0);
-        this.acc.add(diff.setMag(this.maxForce * this.heartbeat));
+        for (let c = 0; c < r.flee.length; c++) {
+          let type = r.flee[c];
+          for (let j = 0; j < closest.length; j++) {
+            let cell = closest[j];
+
+            if (type === cell.type) {
+              let change = createVector(0, 0);
+              // Flee
+
+              change.add(-1 * (cell.pos.x - this.pos.x), -1 * (cell.pos.y - this.pos.y)); // Flee
+              let diff = p5.Vector.sub(change, this.pos);
+              this.acc.add(diff.setMag(this.maxForce * -this.heartbeat));
+            }
+
+          }
+
+        }
       }
     }
+    this.update(time, i);
+    this.acc.mult(0);
+  }
+  checkState(i, count) {
+    let margin = 20;
+    if (this.pos.x <= -wnx / 2 + margin) {
+      //cells[this.type].splice(i, 1);
+      this.state = 'DEAD';
+      count++;
+    } else if (this.pos.x >= wnx / 2 - margin) {
+      //cells[this.type].splice(i, 1);
+      this.state = 'DEAD';
+      count++;
+    } else if (this.pos.y <= -wny / 2 + margin) {
+      //cells[this.type].splice(i, 1);
+      this.state = 'DEAD';
+      count++;
+    } else if (this.pos.y >= wny / 2 - margin) {
+      //cells[this.type].splice(i, 1);
+      this.state = 'DEAD';
+      count++;
+    }
+    return count++;
   }
   update(time) {
-    let diff = p5.Vector.sub(this.des, this.pos);
-    this.acc.add(diff.setMag(this.maxForce));
-    this.acc.normalize();
-    this.acc.setMag(this.maxForce);
     // Acc, vel, pos physiscs
     this.vel.add(this.acc);
     this.vel.setMag(this.maxVelocity)
     this.pos.add(this.vel);
-    this.acc.mult(0);
+
     // Velocity loss to simulate fluid resistance
-    this.vel.mult(0.999);
-    this.heartbeat = 0.5 * sin(this.freq * 0.006 * time) + 0.5
+    this.vel.mult(0.9999);
+    this.heartbeat = 0.5 * sin(this.freq * 0.006 * time) + 0.5;
+
+  }
+  allInProximity(others, max) {
+    let ans = [];
+    for (let i = 0; i < others.length; i++) {
+      let cell = others[i];
+      if (this.id !== cell.id) {
+        let d = dist(this.pos.x, this.pos.y, cell.pos.x, cell.pos.y);
+        if (d <= max) {
+          ans.push(cell);
+        }
+      }
+    }
+    return ans;
   }
   findClosest(others, max) {
     let record = 10000;
