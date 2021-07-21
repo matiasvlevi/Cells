@@ -35,5 +35,14 @@ function keyPressed() {
     });
     let type = 'yellow'
     cells[type].push(new Cell(x, y, type));
+  } else if (key === '5') {
+    let x = mouseX - wnx / 2;
+    let y = mouseY - wny / 2;
+    allPos.red.push({
+      x: x,
+      y: y
+    });
+    let type = 'violet'
+    cells[type].push(new Cell(x, y, type));
   }
 }

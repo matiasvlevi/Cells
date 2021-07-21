@@ -1,8 +1,6 @@
 let wnx = window.innerWidth;
 let wny = window.innerHeight;
 
-let population = 100;
-
 let cells = {
   blue: [],
   red: [],
@@ -19,12 +17,19 @@ let allPos = {
   violet: []
 }
 
-let s = 50;
+let rules = [];
+let selectedRuleset = 1;
+let s = 10;
 let dev = false;
 
 let time = 0;
 let count = 0;
 let index = 0;
+let sim = true;
+
+let cellSize = 6;
+let perception = 24;
+let population = 75;
 
 function reset(seed) {
   time = 0;
@@ -64,9 +69,9 @@ function reset(seed) {
           x: x,
           y: y
         });
-        cells[type].push(new Cell(x, y, type));
+        cells[type].push(new Cell(x, y, type, rules[selectedRuleset]));
       } else {
-        cells[type].push(new Cell(allPos[pos][i].x, allPos[pos][i].y, type));
+        cells[type].push(new Cell(allPos[pos][i].x, allPos[pos][i].y, type, rules[selectedRuleset]));
       }
 
     }
@@ -74,6 +79,13 @@ function reset(seed) {
 }
 let render = true;
 let cycles = 1;
+
+function sandboxMode() {
+  sim = false;
+  population = 0;
+  cellSize = 32;
+  perception = 64
+}
 
 function setup() {
   createCanvas(wnx, wny);
@@ -92,7 +104,7 @@ function draw() {
         let cell = cells[type][i];
         if (cell.state === 'Living') {
           cell.separate(all);
-          cell.interact(all, rules, time, i);
+          cell.interact(all, rules[selectedRuleset], time, i);
           if (render == true) {
             cell.render();
           }
@@ -101,13 +113,15 @@ function draw() {
       }
     }
 
-    if (count >= allPos.blue.length + allPos.green.length + allPos.red.length + allPos.yellow.length - 20) {
-      console.log('Simulation ' + index + ' finished at ' + time + 'ms')
-      console.log('Here is the seed:')
-      console.log({ positions: allPos, rules: rules });
-      index++;
-      reset();
+    if (sim) {
+      if (count >= allPos.blue.length + allPos.green.length + allPos.red.length + allPos.yellow.length) {
+        console.log('Simulation ' + index + ' finished at ' + time + 'ms')
+        console.log('Here is the seed:')
+        console.log({ positions: allPos, rules: rules[selectedRuleset] });
+        index++;
+        reset();
 
+      }
     }
     time++;
   }

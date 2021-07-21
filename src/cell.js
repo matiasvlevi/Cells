@@ -1,27 +1,30 @@
 class Cell {
-  constructor(x, y, type) {
+  constructor(x, y, type, rules) {
     let m = 0;
     this.pos = createVector(x, y);
     this.acc = createVector(0, 0);
     this.vel = createVector(0, 0);
 
-    this.heartbeat = 0;
-    this.freq = random(100, 160);
+
 
     this.des = createVector(0, 0);
-    this.size = 6;
+    this.size = cellSize;
+    this.separation = this.size + 1;
 
-    this.maxForce = 5;
+    this.maxForce = 2;
     this.maxVelocity = 2;
-
-    this.separation = 6;
 
     this.type = type;
     this.id = '#' + JSON.stringify(round(random(1000000, 9999999)));
 
     this.state = 'Living';
 
-    this.perception = 32;
+    this.perception = rules[type].perception || this.size * 2;
+
+    this.heartbeat = 0;
+    this.freq = random(rules[type].heartbeat[0] || 40, rules[type].heartbeat[1] || 50);
+    this.amp = 1;
+
     let c;
     if (type === 'blue') {
       c = color(0, 200, 255, 200);
@@ -78,6 +81,7 @@ class Cell {
 
         let closest = this.allInProximity(others, this.perception);
 
+        // Handle follow rule
         for (let c = 0; c < r.follow.length; c++) {
           let type = r.follow[c];
           for (let j = 0; j < closest.length; j++) {
@@ -87,11 +91,12 @@ class Cell {
               // Go follow
               change.add(cell.pos.x, cell.pos.y);
               let diff = p5.Vector.sub(change, this.pos);
-              this.acc.add(diff.setMag(this.maxForce * this.heartbeat));
+              this.acc.add(diff.setMag(this.maxForce));
 
             }
           }
         }
+        // Handle flee rule
         for (let c = 0; c < r.flee.length; c++) {
           let type = r.flee[c];
           for (let j = 0; j < closest.length; j++) {
@@ -103,16 +108,36 @@ class Cell {
 
               change.add(-1 * (cell.pos.x - this.pos.x), -1 * (cell.pos.y - this.pos.y)); // Flee
               let diff = p5.Vector.sub(change, this.pos);
-              this.acc.add(diff.setMag(this.maxForce * -this.heartbeat));
+              this.acc.add(diff.setMag(-this.maxForce));
             }
 
           }
 
         }
+        // if (r.create !== undefined) {
+        //   // Handle create rule
+        //   for (let c = 0; c < r.create.length; c++) {
+        //     let type = r.create[c];
+        //     for (let j = 0; j < closest.length; j++) {
+        //       let cell = closest[j];
+
+        //       if (type === cell.type) {
+        //         let change = createVector(0, 0);
+        //         // Flee
+
+        //         change.add(-1 * (cell.pos.x - this.pos.x), -1 * (cell.pos.y - this.pos.y)); // Flee
+        //         let diff = p5.Vector.sub(change, this.pos);
+        //         this.acc.add(diff.setMag(this.maxForce * -this.heartbeat));
+        //       }
+
+        //     }
+
+        //   }
+        // }
       }
     }
     this.update(time, i);
-    this.acc.mult(0);
+
   }
   checkState(i, count) {
     let margin = 20;
@@ -123,27 +148,40 @@ class Cell {
     } else if (this.pos.x >= wnx / 2 - margin) {
       //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
+      //this.pos.x = -wnx / 2 + margin * 2;
       count++;
     } else if (this.pos.y <= -wny / 2 + margin) {
       //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
+      //this.pos.y = wny / 2 - margin * 2;
       count++;
     } else if (this.pos.y >= wny / 2 - margin) {
       //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
+      //this.pos.y = -wny / 2 + margin * 2;
       count++;
     }
     return count++;
   }
+  calcHeartBeat() {
+    let v = (this.amp / 2) * sin(this.freq * 0.006 * time) + (this.amp / 2);
+    if (v <= 0) {
+      return 0;
+    } else {
+      return v;
+    }
+  }
   update(time) {
     // Acc, vel, pos physiscs
+    this.acc.setMag(this.heartbeat * this.maxForce);
     this.vel.add(this.acc);
     this.vel.setMag(this.maxVelocity)
     this.pos.add(this.vel);
 
     // Velocity loss to simulate fluid resistance
-    this.vel.mult(0.9999);
-    this.heartbeat = 0.5 * sin(this.freq * 0.006 * time) + 0.5;
+    this.vel.mult(0.01);
+    this.acc.mult(0);
+    this.heartbeat = this.calcHeartBeat();
 
   }
   allInProximity(others, max) {
@@ -184,7 +222,7 @@ class Cell {
   render() {
     push();
     noStroke();
-    fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], this.heartbeat * 130 + 125);
+    fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], this.heartbeat / (this.amp) * 130 + 125);
     ellipse(this.pos.x, this.pos.y, this.size, this.size);
     if (dev === true) {
       stroke(this.color.levels[0], this.color.levels[1], this.color.levels[2], 2)
