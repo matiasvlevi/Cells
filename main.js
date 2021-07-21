@@ -7,14 +7,16 @@ let cells = {
   blue: [],
   red: [],
   green: [],
-  yellow: []
+  yellow: [],
+  violet: []
 }
 
 let allPos = {
   blue: [],
   red: [],
   green: [],
-  yellow: []
+  yellow: [],
+  violet: []
 }
 
 let s = 50;
@@ -31,7 +33,8 @@ function reset(seed) {
     blue: [],
     red: [],
     green: [],
-    yellow: []
+    yellow: [],
+    violet: []
   }
   if (seed !== undefined) {
     allPos = seed.positions;
@@ -40,7 +43,8 @@ function reset(seed) {
       blue: [],
       red: [],
       green: [],
-      yellow: []
+      yellow: [],
+      violet: []
     }
   }
   for (let pos in allPos) {

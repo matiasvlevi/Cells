@@ -14,14 +14,14 @@ class Cell {
     this.maxForce = 5;
     this.maxVelocity = 2;
 
-    this.separation = 5;
+    this.separation = 6;
 
     this.type = type;
     this.id = '#' + JSON.stringify(round(random(1000000, 9999999)));
 
     this.state = 'Living';
 
-    this.perception = 24;
+    this.perception = 32;
     let c;
     if (type === 'blue') {
       c = color(0, 200, 255, 200);
@@ -31,6 +31,8 @@ class Cell {
       c = color(0, 255, 200, 200);
     } else if (type === 'yellow') {
       c = color(255, 230, 50, 200);
+    } else if (type === 'violet') {
+      c = color(205, 0, 255, 200);
     }
     this.color = c;
   }
