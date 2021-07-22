@@ -1,25 +1,12 @@
 let wnx = window.innerWidth;
 let wny = window.innerHeight;
 
-let cells = {
-  blue: [],
-  red: [],
-  green: [],
-  yellow: [],
-  violet: []
-}
+let render = true;
+let cycles = 1;
 
-let allPos = {
-  blue: [],
-  red: [],
-  green: [],
-  yellow: [],
-  violet: []
-}
-
-let rules = [];
-let selectedRuleset = 1;
-let s = 10;
+let selectedRuleset = 2;
+let sx = wnx / 3.5;
+let sy = wny / 3.5;
 let dev = false;
 
 let time = 0;
@@ -27,58 +14,13 @@ let count = 0;
 let index = 0;
 let sim = true;
 
-let cellSize = 6;
+let cellSize = 2;
 let perception = 24;
-let population = 75;
+let population = 120;
+let separation = 3;
 
-function reset(seed) {
-  time = 0;
-  count = 0;
-  cells = {
-    blue: [],
-    red: [],
-    green: [],
-    yellow: [],
-    violet: []
-  }
-  if (seed !== undefined) {
-    allPos = seed.positions;
-  } else {
-    allPos = {
-      blue: [],
-      red: [],
-      green: [],
-      yellow: [],
-      violet: []
-    }
-  }
-  for (let pos in allPos) {
-    let elem = allPos[pos];
-    let nb
-    if (seed == undefined) {
-      nb = population;
-    } else {
-      nb = elem.length;
-    }
-    for (let i = 0; i < nb; i++) {
-      let type = pos;
-      if (seed === undefined) {
-        let x = random(-s, s);
-        let y = random(-s, s);
-        allPos[pos].push({
-          x: x,
-          y: y
-        });
-        cells[type].push(new Cell(x, y, type, rules[selectedRuleset]));
-      } else {
-        cells[type].push(new Cell(allPos[pos][i].x, allPos[pos][i].y, type, rules[selectedRuleset]));
-      }
-
-    }
-  }
-}
-let render = true;
-let cycles = 1;
+let STATS = {}
+let g;
 
 function sandboxMode() {
   sim = false;
@@ -90,39 +32,51 @@ function sandboxMode() {
 function setup() {
   createCanvas(wnx, wny);
   reset();
+  g = new Graph(-wnx / 2, -wny / 2, population * 2);
 }
 
+let statTimer = 0;
 
 function draw() {
   background(34);
   translate(wnx / 2, wny / 2)
-  for (let h = 0; h < cycles; h++) {
-    let all = cells.red.concat(cells.green.concat(cells.blue.concat(cells.yellow)));
+  if (loadedRules) {
+    for (let h = 0; h < cycles; h++) {
 
-    for (let type in cells) {
-      for (let i = 0; i < cells[type].length; i++) {
-        let cell = cells[type][i];
-        if (cell.state === 'Living') {
-          cell.separate(all);
-          cell.interact(all, rules[selectedRuleset], time, i);
-          if (render == true) {
-            cell.render();
+      for (let type in cells) {
+        for (let i = 0; i < cells[type].length; i++) {
+          let cell = cells[type][i];
+          if (cell.state === 'Living') {
+            cell.separate(cells, separation);
+            cell.interact(cells, rules[selectedRuleset]);
+            cell.update(time);
+            if (render == true) {
+              cell.render();
+            }
+            count = cell.checkState(i, count);
           }
-          count = cell.checkState(i, count);
         }
       }
-    }
+      for (let type in cells) {
 
-    if (sim) {
-      if (count >= allPos.blue.length + allPos.green.length + allPos.red.length + allPos.yellow.length) {
-        console.log('Simulation ' + index + ' finished at ' + time + 'ms')
-        console.log('Here is the seed:')
-        console.log({ positions: allPos, rules: rules[selectedRuleset] });
-        index++;
-        reset();
+        for (let i = 0; i < cells[type].length; i++) {
+          let cell = cells[type][i];
+          if (cell.state === 'DEAD') {
+            cells[type].splice(i, 1);
+          }
+        }
 
       }
+      if (statTimer >= 10) {
+        let out = recordStats();
+        for (let i = 0; i < out.length; i++) {
+          g.addValue(out[i].type, out[i].pop, rules[selectedRuleset][out[i].type].color);
+        }
+        statTimer = 0;
+      }
+      time++;
+      statTimer++;
     }
-    time++;
+    g.render();
   }
 }

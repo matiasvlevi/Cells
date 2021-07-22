@@ -1,19 +1,18 @@
-rules.push({
+rules[1] = {
   yellow: {
-    heartbeat: [80, 100],
-    perception: 16,
+    heartbeat: [200, 260],
+    perception: perception,
     follow: [
-      'violet',
-      'green',
-      'blue'
+      'blue',
     ],
-    flee: []
+    flee: [
+      'green'
+    ]
   },
   red: {
     heartbeat: [120, 250],
-    perception: 16,
+    perception: perception,
     follow: [
-      'yellow',
       'blue',
       'green'
     ],
@@ -23,40 +22,35 @@ rules.push({
   },
   blue: {
     heartbeat: [280, 300],
-    perception: 16,
+    perception: perception,
     follow: [
-      'yellow',
       'violet',
-      'green',
-      'blue'
     ],
     flee: [
-      'red',
+      'yellow',
     ]
   },
   green: {
     heartbeat: [300, 360],
-    perception: 16,
+    perception: perception,
     follow: [
-      'blue',
       'yellow',
       'red'
     ],
     flee: [
-      'violet'
+      'blue',
+
     ]
   },
   violet: {
-    heartbeat: [500, 600],
-    perception: 16,
+    heartbeat: [200, 210],
+    perception: perception,
+
     follow: [
-      'blue',
-      'yellow',
       'red',
-      'violet'
     ],
     flee: [
-      'green',
+      'blue'
     ]
   }
-});
+}

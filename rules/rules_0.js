@@ -1,4 +1,5 @@
-rules.push({
+let rules = [];
+rules[0] = {
   yellow: {
     follow: [
       'red',
@@ -46,4 +47,4 @@ rules.push({
       'violet'
     ]
   }
-});
+}
