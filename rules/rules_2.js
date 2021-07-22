@@ -2,107 +2,79 @@ let rate = 400;
 rules[2] = {
   A: {
     color: [255, 255, 0],
-    heartbeat: [200, 210],
+    heartbeat: [30, 100],
     perception: perception,
-    kill: [
-      'C'
-    ],
+
     follow: [
       'B',
-      'D',
-      'C'
-    ],
-    create: [{
-      type: 'E',
-      rate: rate
-    }]
-  },
-  B: {
-    color: [255, 0, 200],
-    heartbeat: [200, 210],
-    perception: perception,
-    kill: [
-      'D'
-    ],
-    follow: [
-      'C',
-      'E',
       'D'
     ],
     flee: [
-      'F'
+
+    ]
+  },
+  B: {
+    color: [255, 0, 100],
+    heartbeat: [30, 100],
+    perception: perception,
+
+    follow: [
+      'C',
+      'E'
+    ],
+    flee: [
+      'D'
     ]
   },
   C: {
-    color: [0, 255, 200],
-    heartbeat: [200, 210],
+    color: [0, 150, 255],
+    heartbeat: [10, 20],
     perception: perception,
-    kill: [
-      'E'
-    ],
-    create: [{
-      type: 'B',
-      rate: rate * 2
-    }],
+
     follow: [
       'D',
-      'F',
-      'E'
+      'A'
+    ],
+    flee: []
+
+  },
+  D: {
+    color: [255, 100, 0],
+    heartbeat: [30, 100],
+    perception: perception * 2,
+
+    follow: [
+      'E',
+      'F'
     ],
     flee: [
       'A'
     ]
-  },
-  D: {
-    color: [100, 100, 255],
-    heartbeat: [200, 210],
-    perception: perception,
-    follow: [
-      'E',
-    ],
-    kill: [
-      'E'
-    ],
-    create: [{
-        type: 'C',
-        rate: rate
-      },
-      {
-        type: 'A',
-        rate: rate
-      }
-    ],
-    flee: [
-      'B',
-      'F'
-    ]
+
   },
   E: {
-    color: [255, 10, 0],
-    heartbeat: [200, 210],
+    color: [0, 255, 0],
+    heartbeat: [30, 100],
     perception: perception,
 
     follow: [
       'F',
     ],
-    flee: [
-      'C'
-    ]
+    flee: []
+
   },
   F: {
-    color: [0, 255, 0],
-    heartbeat: [200, 210],
+    color: [0, 100, 255],
+    heartbeat: [30, 100],
     perception: perception,
+
     follow: [
+      'F',
       'A',
     ],
-    kill: [
+    flee: [
       'B'
-    ],
-    create: [{
-      type: 'D',
-      rate: rate
-    }],
-    flee: []
-  }
+    ]
+
+  },
 }

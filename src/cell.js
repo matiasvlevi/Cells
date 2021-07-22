@@ -14,8 +14,8 @@ class Cell {
     this.size = cellSize;
     this.separation = this.size + 1;
 
-    this.maxForce = 0.5;
-    this.maxVelocity = 0.8;
+    this.maxForce = rules_[type].acc || maxForce;
+    this.maxVelocity = rules_[type].vel || maxVel;
 
     this.type = type;
     this.id = '#' + JSON.stringify(round(random(1000000, 9999999)));
@@ -27,18 +27,6 @@ class Cell {
     this.freq = random(rules_[type].heartbeat[0] || 40, rules_[type].heartbeat[1] || 50);
     this.amp = 1;
 
-    // let c;
-    // if (type === 'blue') {
-    //   c = color(0, 200, 255, 200);
-    // } else if (type === 'red') {
-    //   c = color(255, 100, 0, 200);
-    // } else if (type === 'green') {
-    //   c = color(0, 255, 200, 200);
-    // } else if (type === 'yellow') {
-    //   c = color(255, 230, 50, 200);
-    // } else if (type === 'violet') {
-    //   c = color(205, 0, 255, 200);
-    // }
     if (rules_[type].color === undefined) {
       let r = random(0, 255);
       let g = random(0, 255);
@@ -91,9 +79,9 @@ class Cell {
 
     if (total > 0) {
       steering.div(total);
-      steering.setMag(this.maxVelocity * 30);
+      steering.setMag(this.maxVelocity * 150000000000000);
       steering.sub(this.vel);
-      steering.limit(this.maxForce * 30);
+      steering.limit(this.maxForce * 150000000000000);
     }
     this.acc.add(steering);
   }
@@ -113,11 +101,14 @@ class Cell {
             for (let j = 0; j < closest.length; j++) {
               let cell = closest[j];
               if (type === cell.type) {
+                let d = dist(this.pos.x, this.pos.y, cell.pos.x, cell.pos.y);
                 let change = createVector(0, 0);
                 // Go follow
                 change.add(cell.pos.x, cell.pos.y);
                 let diff = p5.Vector.sub(change, this.pos);
-                this.acc.add(diff.setMag(this.maxForce * this.heartbeat));
+                diff.setMag(this.maxForce)
+                diff.mult(d * d * this.heartbeat);
+                this.acc.add(diff);
 
               }
             }
@@ -133,12 +124,15 @@ class Cell {
               let cell = closest[j];
 
               if (type === cell.type) {
+                let d = dist(this.pos.x, this.pos.y, cell.pos.x, cell.pos.y);
                 let change = createVector(0, 0);
                 // Flee
 
                 change.add(-1 * (cell.pos.x - this.pos.x), -1 * (cell.pos.y - this.pos.y)); // Flee
                 let diff = p5.Vector.sub(change, this.pos);
-                this.acc.add(diff.setMag(-this.maxForce * this.heartbeat));
+                diff.setMag(-this.maxForce)
+                diff.mult(d * this.heartbeat);
+                this.acc.add(diff);
               }
 
             }
@@ -166,7 +160,7 @@ class Cell {
 
 
           }
-          if (count >= r.create.length) {
+          if (count >= r.create.length - 1) {
             this.timeOff = 0;
           }
           this.timeOff++;
@@ -202,7 +196,7 @@ class Cell {
 
   }
   checkState(i, count) {
-    let margin = 20;
+    let margin = 0;
     if (this.pos.x <= -wnx / 2 + margin) {
       //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
@@ -226,7 +220,7 @@ class Cell {
     return count++;
   }
   calcHeartBeat(time) {
-    let v = (this.amp / 2) * sin(this.freq * 0.006 * time) + (this.amp / 2);
+    let v = (50) * sin(this.freq * 0.01 * time) - 49;
     if (v <= 0) {
       return 0;
     } else {
@@ -284,7 +278,7 @@ class Cell {
   render() {
     push();
     noStroke();
-    fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], this.heartbeat / (this.amp) * 130 + 125);
+    fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], this.heartbeat * 55 + 200);
     ellipse(this.pos.x, this.pos.y, this.size, this.size);
     if (dev === true) {
       stroke(this.color.levels[0], this.color.levels[1], this.color.levels[2], 2)

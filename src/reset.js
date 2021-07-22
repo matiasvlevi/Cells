@@ -12,6 +12,7 @@ function reset(seed) {
 
       }
     }
+    let index = 1;
     for (let pos in rules[selectedRuleset]) {
       if (allPos[pos] === undefined) {
         allPos[pos] = [];
@@ -32,11 +33,11 @@ function reset(seed) {
           let y = 0;
           let ran = random(-1, 1)
           if (ran > 0) {
-            x = random(-sx, sx / 2)
-            y = random(-sy, sy / 2)
+            x = random(-sx / (2 * index), sx / (2 * index))
+            y = random(-sy / (2 * index), sy / (2 * index))
           } else {
-            x = random(-sx / 2, sx);
-            y = random(-sy / 2, sy)
+            x = random(-sx / (2 * index), sx / (2 * index));
+            y = random(-sy / (2 * index), sy / (2 * index))
           }
 
           allPos[pos].push({
@@ -49,7 +50,7 @@ function reset(seed) {
         }
 
       }
-
+      //index--;
     }
     recordStats()
   }
