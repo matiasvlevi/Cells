@@ -64,3 +64,7 @@ Set A:
 ```
 A>A;B>A;E>A;C>B,M;C<D,H;D>B,E;D<C;F>E;F<L;G>F,D;G<E;H>G,I;H<P;M>K;M<N;K>C;I>D,K;J>I,Q;L>H,J;N>K,J;P>J,R;O>L,P;O<N;Q>R;R>N,O;
 ```
+Set B:
+```
+A>A;B>A;B<J;E>A;E<L;F>E;C>B,D;C<I;D>B,E;H>C,K;H<P;I>F,H,L;J>D,L;R>R,U;R<F;U>M;U<R;M>F,N;N>P;N<J;P>Q;L>K,P;K>I,O;S>V;S<H;T>S;T<O;V>T,Q;Q>Q;
+```
