@@ -1,10 +1,8 @@
-let heartbeat = [30, 300];
-let perception = 26;
 let ruleset = {
   A: {
     color: [255, 255, 0],
-    heartbeat: heartbeat,
-    perception: perception,
+    heartbeat: [100, 300],
+    perception: 24,
     acc: 0.4,
     vel: 1,
     kill: [{
@@ -21,8 +19,8 @@ let ruleset = {
   },
   B: {
     color: [255, 0, 100],
-    heartbeat: heartbeat,
-    perception: perception,
+    heartbeat: [100, 300],
+    perception: 24,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -37,7 +35,7 @@ let ruleset = {
   C: {
     color: [0, 120, 255],
     heartbeat: [10, 20],
-    perception: perception,
+    perception: 24,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -47,8 +45,8 @@ let ruleset = {
   },
   D: {
     color: [255, 100, 0],
-    heartbeat: heartbeat,
-    perception: perception * 2,
+    heartbeat: [100, 300],
+    perception: 32,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -63,8 +61,8 @@ let ruleset = {
   },
   E: {
     color: [0, 255, 0],
-    heartbeat: heartbeat,
-    perception: perception,
+    heartbeat: [100, 300],
+    perception: 24,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -77,8 +75,8 @@ let ruleset = {
   },
   F: {
     color: [0, 100, 255],
-    heartbeat: heartbeat,
-    perception: perception,
+    heartbeat: [100, 300],
+    perception: 24,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -89,8 +87,8 @@ let ruleset = {
   },
   G: {
     color: [0, 255, 200],
-    heartbeat: heartbeat,
-    perception: perception,
+    heartbeat: [100, 300],
+    perception: 24,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -103,8 +101,8 @@ let ruleset = {
   },
   H: {
     color: [150, 0, 255],
-    heartbeat: heartbeat,
-    perception: perception,
+    heartbeat: [100, 300],
+    perception: 24,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -115,8 +113,8 @@ let ruleset = {
   },
   I: {
     color: [255, 0, 100],
-    heartbeat: heartbeat,
-    perception: perception,
+    heartbeat: [100, 300],
+    perception: 24,
     acc: 0.4,
     vel: 1,
     follow: [

@@ -3,32 +3,14 @@ let wny = window.innerHeight - 18;
 let render = true;
 let cycles = 1;
 
-let selectedRuleset = 3;
-let sx = 430; //wnx / 4;
-let sy = 430; //wny / 3;
-let dev = false;
-
 let time = 0;
 let count = 0;
 let index = 0;
 let sim = true;
 
-// let maxVel = 1;
-// let maxForce = 0.4;
-
-let cellSize = 6;
-let population = 25;
-let separation = cellSize + 1;
-
 let STATS = {}
 let g;
 
-function sandboxMode() {
-  sim = false;
-  population = 0;
-  cellSize = 32;
-  perception = 64
-}
 
 function setup() {
   createCanvas(wnx, wny);
@@ -70,15 +52,21 @@ function draw() {
       }
 
     }
-    // if (statTimer >= 10) {
-    //   let out = recordStats();
-    //   for (let i = 0; i < out.length; i++) {
-    //     g.addValue(out[i].type, out[i].pop, ruleset[out[i].type].color);
-    //   }
-    //   statTimer = 0;
-    // }
+    if (allowgraph) {
+      if (statTimer >= 10) {
+        let out = recordStats();
+        for (let i = 0; i < out.length; i++) {
+          g.addValue(out[i].type, out[i].pop, ruleset[out[i].type].color);
+        }
+        statTimer = 0;
+      }
+    }
     time++;
-    //statTimer++;
+    if (allowgraph) {
+      statTimer++;
+    }
   }
-  //g.render();
+  if (allowgraph) {
+    g.render();
+  }
 }
