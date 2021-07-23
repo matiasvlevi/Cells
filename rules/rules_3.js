@@ -1,11 +1,14 @@
 // let rate = 400;
 let heartbeat = [30, 300];
-rules[3] = {
+ruleset = {
   A: {
     color: [255, 255, 0],
     heartbeat: heartbeat,
     perception: perception,
-
+    kill: [{
+      type: 'B',
+      rate: 20
+    }],
     follow: [
       'B',
       'D'

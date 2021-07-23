@@ -28,9 +28,9 @@ class Cell {
     this.amp = 1;
 
     if (rules_[type].color === undefined) {
-      let r = random(0, 255);
-      let g = random(0, 255);
-      let b = random(0, 255);
+      let r = random(100, 255);
+      let g = random(100, 255);
+      let b = random(100, 255);
       let a = 200;
       rules_[type].color = [r, g, b, a];
       //this.color = color(r, g, b, a);
@@ -89,7 +89,7 @@ class Cell {
     let timeOff = 0;
     for (let rule in rules) {
       if (rule === this.type) {
-        let r = rules[rule];
+        let r = ruleset;
 
         // let closest = this.allInProximity(others, this.perception);
         let closest;
@@ -168,7 +168,8 @@ class Cell {
         if (r.kill !== undefined) {
           // Handle create rule
           for (let c = 0; c < r.kill.length; c++) {
-            let type = r.kill[c];
+            let type = r.kill[c].type;
+            this.hungerDelay = r.kill[c].rate;
             closest = this.allInProximity(others[type], this.size / 2 + 2);
             for (let j = 0; j < closest.length; j++) {
               let cell = closest[j];

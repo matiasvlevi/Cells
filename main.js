@@ -1,12 +1,12 @@
 let wnx = window.innerWidth;
 let wny = window.innerHeight;
-
+let ruleset; //parseRule('A>B;B<A');
 let render = true;
 let cycles = 3;
 
 let selectedRuleset = 3;
-let sx = wnx / 3;
-let sy = wny / 2;
+let sx = wnx / 4;
+let sy = wny / 3;
 let dev = false;
 
 let time = 0;
@@ -19,7 +19,7 @@ let maxForce = 0.25;
 
 let cellSize = 3;
 let perception = 21;
-let population = 100;
+let population = 25;
 let separation = 3;
 
 let STATS = {}
@@ -34,7 +34,7 @@ function sandboxMode() {
 
 function setup() {
   createCanvas(wnx, wny);
-  reset();
+  reset(ruleset);
   g = new Graph(-wnx / 2, -wny / 2, population * 2);
 }
 
@@ -51,7 +51,7 @@ function draw() {
           let cell = cells[type][i];
           if (cell.state === 'Living') {
             cell.separate(cells, separation);
-            cell.interact(cells, rules[selectedRuleset]);
+            cell.interact(cells, ruleset);
             cell.update(time);
             if (render == true) {
               if (h === 0) {
@@ -76,7 +76,7 @@ function draw() {
       // if (statTimer >= 10) {
       //   let out = recordStats();
       //   for (let i = 0; i < out.length; i++) {
-      //     g.addValue(out[i].type, out[i].pop, rules[selectedRuleset][out[i].type].color);
+      //     g.addValue(out[i].type, out[i].pop, ruleset[out[i].type].color);
       //   }
       //   statTimer = 0;
       // }
