@@ -40,12 +40,4 @@ A>B;B>C,A;C>A;C<B;D>A,C;
 
 ## Use your rules
 
-Open the browser console and type
-```js
-start('your_string_ruleset_here');
-```
-
-example
-```js
-start('A>B;B<A');
-```
+Write the rule in the input element at the top of the page and click `Run`
