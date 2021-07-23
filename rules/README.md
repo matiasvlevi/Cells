@@ -42,10 +42,18 @@ let ruleset = {
 * `acc` is the maximum acceleration a cell can achieve.
 * `vel` is the maximum velocity a cell can achieve.
 
-You can parse a ruletext with this method in the browser's console.
+<br/>
+You can start a simulation with a certain ruletext like so
+
 ```js
-let rule = parseRuletext('A>B;');
-console.log(rule);
+// Run simulation with rules A follows B
+start('A>B;');
+```
+
+You can parse a ruletext file or string with this method to a JSON for more customization.
+```js
+let ruleset = parseRuletext('A>B;');
+start(ruleset);
 ```
 
 <br/>

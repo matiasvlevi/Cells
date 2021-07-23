@@ -35,7 +35,7 @@ function removeEmpty(arr) {
   return ans;
 }
 
-function parseRule(rulestr) {
+function parseRuletext(rulestr) {
 
   let data = {}
   let len = rulestr.length;
@@ -128,4 +128,9 @@ function parseRule(rulestr) {
   }
 
   return data;
+}
+
+const isBrowser = typeof process !== 'object';
+if (!isBrowser) {
+  module.exports = parseRuletext;
 }

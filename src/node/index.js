@@ -1,10 +1,10 @@
 const fs = require('fs');
 
-let name = process.argv[2] || 'set_a';
-let file = ('./ruletext/' + name + '.rtxt');
-console.log(parse_rtxt(file))
+class Rtxt {
 
-function parse_rtxt(path) {
+}
+Rtxt.stringToJSON = require('../parseRule');
+Rtxt.parseToLine = function(path) {
   let data = fs.readFileSync(path, 'utf-8');
   let lines = data.split('\n');
   let readLines = '';
@@ -15,3 +15,14 @@ function parse_rtxt(path) {
   }
   return readLines;
 }
+Rtxt.fileToJSON = function(path) {
+  return Rtxt.stringToJSON(Rtxt.parseToLine(file))
+}
+
+
+let name = process.argv[2] || 'set_a';
+let file = ('./ruletext/' + name + '.rtxt');
+
+
+let jsonRule = Rtxt.fileToJSON(file);
+console.log(jsonRule);
