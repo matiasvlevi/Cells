@@ -24,6 +24,8 @@ Here is another example for the ruleset `A follows B, B follows C and A, C follo
 A>B;B>C,A;C>A;C<B;D>A,C;
 ```
 
+<br/>
+
 ## Use your rules
 
 Open the browser console and type
