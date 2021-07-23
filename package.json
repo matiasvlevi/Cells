@@ -4,8 +4,8 @@
   "description": "This is a web application that simulates fauna with singular cells & simple rules.\r Rules can be modified.",
   "main": "main.js",
   "scripts": {
-    "tojson": "node src/node/index.js",
-    "tostr":"node src/node/str.js"
+    "tojson": "node src/node/tojson.js",
+    "tostr":"node src/node/tostr.js"
   },
   "repository": {
     "type": "git",
