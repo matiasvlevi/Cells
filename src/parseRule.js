@@ -73,6 +73,14 @@ function parseRule(rulestr) {
         vel: 1
       }
       for (let j = 0; j < spec.length; j++) {
+        if (data[spec[j]] === undefined) {
+          data[spec[j]] = {
+            heartbeat: [240, 360],
+            perception: 32,
+            acc: 0.4,
+            vel: 1
+          };
+        }
         if (action === '>') {
           if (obj['follow'] === undefined) {
             obj['follow'] = [];
@@ -91,7 +99,14 @@ function parseRule(rulestr) {
     } else {
 
       for (let j = 0; j < spec.length; j++) {
-
+        if (data[spec[j]] === undefined) {
+          data[spec[j]] = {
+            heartbeat: [240, 360],
+            perception: 32,
+            acc: 0.4,
+            vel: 1
+          };
+        }
         if (action === '>') {
           if (data[name]['follow'] === undefined) {
             data[name]['follow'] = [];
