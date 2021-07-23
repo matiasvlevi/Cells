@@ -1,6 +1,3 @@
-let sample = 'A>B,C;B>C:B<A;D>A,C;D<B;C>D;E>C,D;E<C';
-
-
 function toArray(str) {
   let split = str.split(',');
   let ans = [];
@@ -8,21 +5,6 @@ function toArray(str) {
     ans.push(split[i]);
   }
   return ans;
-}
-
-function verify(value, chars) {
-  let count = 0;
-  for (let i = 0; i < chars.length; i++) {
-    if (value === chars[i]) {
-      count++;
-    }
-  }
-  if (count === 0) {
-    return false;
-  } else {
-    return true;
-  }
-
 }
 
 function removeEmpty(arr) {
@@ -35,7 +17,7 @@ function removeEmpty(arr) {
   return ans;
 }
 
-function parseRuletext(rulestr) {
+const parseRuletext = (rulestr) => {
 
   let data = {}
   let len = rulestr.length;
@@ -130,7 +112,7 @@ function parseRuletext(rulestr) {
   return data;
 }
 
-const isBrowser = typeof process !== 'object';
-if (!isBrowser) {
+const brow = typeof process !== 'object';
+if (!brow) {
   module.exports = parseRuletext;
 }
