@@ -52,19 +52,17 @@ function draw() {
       }
 
     }
-    if (allowgraph) {
-      if (statTimer >= 10) {
-        let out = recordStats();
-        for (let i = 0; i < out.length; i++) {
-          g.addValue(out[i].type, out[i].pop, ruleset[out[i].type].color);
-        }
-        statTimer = 0;
+    if (statTimer >= 10) {
+      let out = recordStats();
+      for (let i = 0; i < out.length; i++) {
+        g.addValue(out[i].type, out[i].pop, ruleset[out[i].type].color);
       }
+      statTimer = 0;
     }
     time++;
-    if (allowgraph) {
-      statTimer++;
-    }
+
+    statTimer++;
+
   }
   if (allowgraph) {
     g.render();
