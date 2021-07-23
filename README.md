@@ -40,4 +40,5 @@ A>B;B>C,A;C>A;C<B;D>A,C;
 
 ## Use your rules
 
-Write the rule in the input element at the top of the page and click `Run`
+Write the rule in the input element at the top of the page and click `Run`.
+You can find the compiled version of your rules in the browser's console, the compiled version allows for more customization.
