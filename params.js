@@ -19,6 +19,13 @@ let population = 25;
 // Perception radius (vision of other cells)
 // See rules/rules.js to change for each individual cell
 
+// acc is a value that defines the max acceleration a cell can achieve
+// See rules/rules.js to change for each individual cell
+
+// vel is a value that defines the max velocity a cell can achieve
+// See rules/rules.js to change for each individual cell
+
+
 // Wheter or not to display perception radius
 let dev = false;
 
