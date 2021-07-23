@@ -22,8 +22,8 @@ Cells can follow one or multiple cells and Cells can also flee one or multiple c
 
 Ruletext is a simple language to express cell rules.
 A Ruletext file has the `.rtxt` extension.
-you can parse such files by placing them in `ruletext/` by running `npm run compile [name of file]`.
-be sure that you installed dependencies with `npm install`. 
+You can parse such files by placing them in `ruletext/` by running `npm run compile [name of file]`.
+Be sure that you installed dependencies with `npm install`. 
 
 ### Syntax
 
