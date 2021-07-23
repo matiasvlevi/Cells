@@ -1,10 +1,12 @@
-// let rate = 400;
 let heartbeat = [30, 300];
-ruleset = {
+let perception = 26;
+let ruleset = {
   A: {
     color: [255, 255, 0],
     heartbeat: heartbeat,
     perception: perception,
+    acc: 0.4,
+    vel: 1,
     kill: [{
       type: 'B',
       rate: 20
@@ -21,7 +23,8 @@ ruleset = {
     color: [255, 0, 100],
     heartbeat: heartbeat,
     perception: perception,
-
+    acc: 0.4,
+    vel: 1,
     follow: [
       'C',
       'F'
@@ -35,7 +38,8 @@ ruleset = {
     color: [0, 120, 255],
     heartbeat: [10, 20],
     perception: perception,
-
+    acc: 0.4,
+    vel: 1,
     follow: [
       'D',
     ],
@@ -45,7 +49,7 @@ ruleset = {
     color: [255, 100, 0],
     heartbeat: heartbeat,
     perception: perception * 2,
-    acc: 0.01,
+    acc: 0.4,
     vel: 1,
     follow: [
       'G',
@@ -61,7 +65,8 @@ ruleset = {
     color: [0, 255, 0],
     heartbeat: heartbeat,
     perception: perception,
-
+    acc: 0.4,
+    vel: 1,
     follow: [
       'F',
     ],
@@ -74,7 +79,8 @@ ruleset = {
     color: [0, 100, 255],
     heartbeat: heartbeat,
     perception: perception,
-
+    acc: 0.4,
+    vel: 1,
     follow: [
       'G',
       'A',
@@ -85,7 +91,8 @@ ruleset = {
     color: [0, 255, 200],
     heartbeat: heartbeat,
     perception: perception,
-
+    acc: 0.4,
+    vel: 1,
     follow: [
       'H',
     ],
@@ -98,7 +105,8 @@ ruleset = {
     color: [150, 0, 255],
     heartbeat: heartbeat,
     perception: perception,
-
+    acc: 0.4,
+    vel: 1,
     follow: [
       'A',
     ],
@@ -109,7 +117,8 @@ ruleset = {
     color: [255, 0, 100],
     heartbeat: heartbeat,
     perception: perception,
-
+    acc: 0.4,
+    vel: 1,
     follow: [
       'E',
       'H'
