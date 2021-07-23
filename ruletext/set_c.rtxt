@@ -1,0 +1,7 @@
+# Set C
+A>B;
+B>C,A;
+C>D,B;
+B<D;
+A<C;
+D<A;
