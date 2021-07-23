@@ -2,7 +2,7 @@ let ruleset = {
   A: {
     color: [255, 255, 0],
     heartbeat: [100, 300],
-    perception: 24,
+    perception: 64,
     acc: 0.4,
     vel: 1,
     kill: [{
@@ -62,7 +62,7 @@ let ruleset = {
   E: {
     color: [0, 255, 0],
     heartbeat: [100, 300],
-    perception: 24,
+    perception: 64,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -76,7 +76,7 @@ let ruleset = {
   F: {
     color: [0, 100, 255],
     heartbeat: [100, 300],
-    perception: 24,
+    perception: 64,
     acc: 0.4,
     vel: 1,
     follow: [
@@ -102,7 +102,7 @@ let ruleset = {
   H: {
     color: [150, 0, 255],
     heartbeat: [100, 300],
-    perception: 24,
+    perception: 32,
     acc: 0.4,
     vel: 1,
     follow: [

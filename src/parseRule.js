@@ -121,7 +121,6 @@ function parseRule(rulestr) {
           data[name]['flee'].push(spec[j]);
 
         }
-        //console.log(data)
       }
 
 
