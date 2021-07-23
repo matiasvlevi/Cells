@@ -31,25 +31,3 @@ let dev = false;
 
 // Wheter or not to display population graph
 let allowgraph = false;
-let ruleset = {
-  A: {
-    color: [0, 100, 255],
-    heartbeat: [100, 200],
-    perception: 64,
-    acc: 0.3,
-    vel: 1,
-    follow: [
-      'B'
-    ]
-  },
-  B: {
-    color: [255, 100, 0],
-    heartbeat: [100, 200],
-    perception: 24,
-    acc: 0.6,
-    vel: 1,
-    flee: [
-      'A'
-    ]
-  }
-}

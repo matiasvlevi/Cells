@@ -1,0 +1,23 @@
+{
+  "name": "Cells",
+  "version": "1.0.0",
+  "description": "This is a web application that simulates fauna with singular cells & simple rules.\r Rules can be modified.",
+  "main": "main.js",
+  "scripts": {
+    "compile": "node src/node/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matiasvlevi/Cells.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matiasvlevi/Cells/issues"
+  },
+  "homepage": "https://github.com/matiasvlevi/Cells#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}

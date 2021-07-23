@@ -1,0 +1,26 @@
+# Set A
+A>A;
+B>A;
+E>A;
+C>B,M;
+C<D,H;
+D>B,E;
+D<C;
+F>E;
+F<L;
+G>F,D;
+G<E;
+H>G,I;
+H<P;
+M>K;
+M<N;
+K>C;
+I>D,K;
+J>I,Q;
+L>H,J;
+N>K,J;
+P>J,R;
+O>L,P;
+O<N;
+Q>R;
+R>N,O;

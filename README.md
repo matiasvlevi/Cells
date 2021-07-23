@@ -20,11 +20,18 @@ Cells can follow one or multiple cells and Cells can also flee one or multiple c
 
 ## Create rules
 
-Here is the syntax:
+Ruletext is a simple language to express cell rules.
+A Ruletext file has the `.rtxt` extension.
+you can parse such files by placing them in `ruletext/` by running `npm run compile [name of file]`.
+be sure that you installed dependencies with `npm install`. 
+
+### Syntax
+
 * `A>B` means A follows B
 * `B<A` means B flees A
-* use `,` to enumerate multiple cells
-* use `;` to separate expressions  
+* `,` to enumerate multiple cells
+* `;` to separate expressions 
+* `#` add comment, ignored line  
 
 Here is an example for the ruleset `A follows B, B follows C, C follows A, C flees B`
 ```
