@@ -28,14 +28,23 @@ class Cell {
     this.amp = 1;
 
     let ran = floor(random(0, 3));
+
+
     if (rules_[type].color === undefined) {
-      let r = random(0, 150);
-      let g = random(0, 150);
-      let b = random(0, 150);
-      let a = 200;
-      rules_[type].color = [r, g, b, a];
-      rules_[type].color[ran] = random(220, 255);
-      //this.color = color(r, g, b, a);
+      let index = 0;
+      let i = 0;
+      // Find index of this type. 
+      for (let elem in rules_) {
+        if (elem === this.type) {
+          index = i;
+        }
+        i++;
+      }
+      // Divide index by total number of elements to pass the value through the color scale.
+      console.log(index, i)
+      let value = index / i;
+      console.log(colorScale(value))
+      rules_[type].color = colorScale(value);
     }
     let r = rules_[type].color[0];
     let g = rules_[type].color[1];
