@@ -11,7 +11,7 @@ let cellSize = 6;
 let separation = cellSize + 1;
 
 // Cell population for each type
-let population = 25;
+let population = 45;
 
 // Hearbeat is an array of two values representing minimum heartbeat rate & maximum heartbeatrate
 // See rules/rules.js to change for each individual cell
