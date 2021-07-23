@@ -35,7 +35,7 @@ let ruleset = {
   C: {
     color: [0, 120, 255],
     heartbeat: [10, 20],
-    perception: 24,
+    perception: 64,
     acc: 0.4,
     vel: 1,
     follow: [
