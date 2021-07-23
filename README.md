@@ -6,6 +6,18 @@ Rules can be modified.
 
 <br/><br/>
 
+## Run
+
+* Open `index.html` or click [this link](https://raw.githack.com/matiasvlevi/Cells/master/index.html)
+
+<br/>
+
+## Ruleset
+The cells follow a certain ruleset to enable their behaviour. Rules can be broken down into two behaviors, follow or flee.
+Cells can follow one or multiple cells and Cells can also flee one or multiple cells.
+
+<br/>
+
 ## Create rules
 
 Here is the syntax:

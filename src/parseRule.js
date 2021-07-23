@@ -1,4 +1,4 @@
-let sample = 'A>B,C;B>C:B<A;D>A,C;D<B';
+let sample = 'A>B,C;B>C:B<A;D>A,C;D<B;C>D;E>C,D;E<C';
 
 
 function toArray(str) {
@@ -67,8 +67,10 @@ function parseRule(rulestr) {
 
     if (data[name] === undefined) {
       let obj = {
-        heartbeat: [30, 120],
+        heartbeat: [240, 360],
         perception: 32,
+        acc: 0.4,
+        vel: 1
       }
       for (let j = 0; j < spec.length; j++) {
         if (action === '>') {

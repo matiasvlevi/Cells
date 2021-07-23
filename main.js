@@ -2,7 +2,7 @@ let wnx = window.innerWidth;
 let wny = window.innerHeight;
 let ruleset; //parseRule('A>B;B<A');
 let render = true;
-let cycles = 3;
+let cycles = 2;
 
 let selectedRuleset = 3;
 let sx = wnx / 4;
@@ -15,10 +15,10 @@ let index = 0;
 let sim = true;
 
 let maxVel = 1;
-let maxForce = 0.25;
+let maxForce = 0.4;
 
 let cellSize = 3;
-let perception = 21;
+let perception = 24;
 let population = 25;
 let separation = 3;
 

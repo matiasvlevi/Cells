@@ -27,12 +27,14 @@ class Cell {
     this.freq = random(rules_[type].heartbeat[0] || 40, rules_[type].heartbeat[1] || 50);
     this.amp = 1;
 
+    let ran = floor(random(0, 3));
     if (rules_[type].color === undefined) {
-      let r = random(100, 255);
-      let g = random(100, 255);
-      let b = random(100, 255);
+      let r = random(0, 150);
+      let g = random(0, 150);
+      let b = random(0, 150);
       let a = 200;
       rules_[type].color = [r, g, b, a];
+      rules_[type].color[ran] = random(220, 255);
       //this.color = color(r, g, b, a);
     }
     let r = rules_[type].color[0];
@@ -89,7 +91,7 @@ class Cell {
     let timeOff = 0;
     for (let rule in rules) {
       if (rule === this.type) {
-        let r = ruleset;
+        let r = ruleset[this.type];
 
         // let closest = this.allInProximity(others, this.perception);
         let closest;

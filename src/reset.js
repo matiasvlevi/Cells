@@ -1,5 +1,6 @@
 function reset(rules, positions) {
   if (loadedRules) {
+    ruleset = rules;
     time = 0;
     count = 0;
     cells = {}
