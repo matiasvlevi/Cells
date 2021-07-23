@@ -41,7 +41,6 @@ class Cell {
         i++;
       }
       // Divide index by total number of elements to pass the value through the color scale.
-      console.log(index, i)
       let value = index / i;
       rules_[type].color = colorScale(value);
     }
