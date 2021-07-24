@@ -58,7 +58,7 @@ start(ruleset);
 
 <br/>
 
-### Intresting rule sets
+### Interesting rule sets
 
 Set A:
 ```
