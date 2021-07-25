@@ -36,14 +36,17 @@ const parseRuletext = (rulestr) => {
     let spec;
     let action;
     let split;
-    let actions = ['<', '>'];
+    let action_types = ['simple', 'simple', 'detailed', 'detailed', 'value', 'value'];
+    let actions = ['flee', 'follow', 'create', 'kill', 'perception', 'population'];
+    let actions_keys = ['<', '>', '+', '-', '?', '$'];
 
-    for (let j = 0; j < actions.length; j++) {
-      if (elem.indexOf(actions[j]) !== -1) {
-        split = elem.split(actions[j]);
+    // Iterate through action keys to set default variables. (Name, argument, split, action key)
+    for (let j = 0; j < actions_keys.length; j++) {
+      if (elem.indexOf(actions_keys[j]) !== -1) {
+        split = elem.split(actions_keys[j]);
         name = split[0];
         spec = toArray(split[1]);
-        action = actions[j];
+        action = actions_keys[j];
       }
     }
 
@@ -55,56 +58,85 @@ const parseRuletext = (rulestr) => {
         vel: 1
       }
       for (let j = 0; j < spec.length; j++) {
-        if (data[spec[j]] === undefined) {
-          data[spec[j]] = {
-            heartbeat: [240, 360],
-            perception: 32,
-            acc: 0.4,
-            vel: 1
-          };
-        }
-        if (action === '>') {
-          if (obj['follow'] === undefined) {
-            obj['follow'] = [];
+        for (let a = 0; a < actions.length; a++) {
+          if (action !== '?' && action !== '$') {
+            if (data[spec[j]] === undefined) {
+              data[spec[j]] = {
+                heartbeat: [240, 360],
+                perception: 32,
+                acc: 0.4,
+                vel: 1
+              };
+            }
           }
-          obj['follow'].push(spec[j]);
-        } else if (action === '<') {
-          if (obj['flee'] === undefined) {
-            obj['flee'] = [];
+          if (action === actions_keys[a]) {
+            let action_name = actions[a];
+            if (obj[action_name] === undefined) {
+              obj[action_name] = [];
+            }
+            if (action_types[a] === 'detailed') {
+              let rate = 1500;
+              if (action_name === 'kill') {
+                rate = 400;
+              }
+              let details = {
+                type: spec[j],
+                rate: rate
+              }
+              obj[action_name].push(details);
+            } else if (action_types[a] === 'simple') {
+              obj[action_name].push(spec[j]);
+            } else if (action_types[a] === 'value') {
+              obj[action_name] = +spec[j];
+            }
+
           }
-          obj['flee'].push(spec[j]);
         }
       }
       data[name] = obj;
 
 
     } else {
-
+      let obj = data[name];
       for (let j = 0; j < spec.length; j++) {
-        if (data[spec[j]] === undefined) {
-          data[spec[j]] = {
-            heartbeat: [240, 360],
-            perception: 32,
-            acc: 0.4,
-            vel: 1
-          };
-        }
-        if (action === '>') {
-          if (data[name]['follow'] === undefined) {
-            data[name]['follow'] = [];
+
+        for (let a = 0; a < actions.length; a++) {
+          //
+          if (action !== '?' && action !== '$') {
+            if (data[spec[j]] === undefined) {
+              data[spec[j]] = {
+                heartbeat: [240, 360],
+                perception: 32,
+                acc: 0.4,
+                vel: 1
+              };
+            }
           }
-          data[name]['follow'].push(spec[j]);
+          if (action === actions_keys[a]) {
+            let action_name = actions[a];
+            if (obj[action_name] === undefined) {
+              obj[action_name] = [];
+            }
+            if (action_types[a] === 'detailed') {
+              let rate = 1500;
+              if (action_name === 'kill') {
+                rate = 400;
+              }
+              let details = {
+                type: spec[j],
+                rate: rate
+              }
+              obj[action_name].push(details);
+            } else if (action_types[a] === 'simple') {
+              obj[action_name].push(spec[j]);
+            } else if (action_types[a] === 'value') {
+              obj[action_name] = +spec[j];
+            }
 
-
-        } else if (action === '<') {
-          if (data[name]['flee'] === undefined) {
-            data[name]['flee'] = [];
           }
-          data[name]['flee'].push(spec[j]);
-
         }
       }
-
+      data[name] = obj;
 
     }
   }
