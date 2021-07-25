@@ -7,10 +7,21 @@ Rtxt.parseToLine = function(path) {
   let lines = data.split('\n');
   let readLines = '';
   for (let i = 0; i < lines.length; i++) {
-    if (lines[i][0] !== '#') {
-      readLines += lines[i].split('\r')[0];
+    let line_no_comments = '';
+    if (lines[i].indexOf('#') !== -1) {
+      line_no_comments = lines[i].split('#')[0];
+    } else {
+      line_no_comments = lines[i];
+    }
+    if (line_no_comments.indexOf('\r') !== -1) {
+      readLines += line_no_comments.split('\r')[0];
+    } else {
+      readLines += line_no_comments;
+
     }
   }
+  // Remove all spaces
+  readLines = readLines.replace(/  */gm, '');
   return readLines;
 }
 Rtxt.fileToJSON = function(file) {
