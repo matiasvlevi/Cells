@@ -1,5 +1,5 @@
 function reset(rules, positions) {
-
+  g.clear();
   ruleset = rules;
   time = 0;
   count = 0;
@@ -23,7 +23,7 @@ function reset(rules, positions) {
     let elem = allPos[pos];
     let nb;
     if (positions === undefined) {
-      nb = population;
+      nb = rules[pos].population || 45;
     } else {
       nb = elem.length;
     }
