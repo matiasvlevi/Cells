@@ -1,16 +1,65 @@
 # Rule sets
 
-Rule sets are json values containing information about the rules of the simulation.
-
+Rule sets are set of rules that define the behaviour of a simulation.
 
 
 ### Creating a rule set
-You can either create one with the syntax explained in the main README or directly in js.
+ 
+You can either write one with Ruletext or JSON.
 
 
-#### JS rule set
+<br/><br/>
+
+### Ruletext
+
+
+Ruletext is a simple language to express cell rules.
+A Ruletext file has the `.rtxt` extension.
+
+You can parse such files by placing them in `ruletext/` by running `npm run tojson [name of file]` or `npm run tostr [name of file]`.
+
+Be sure that you installed dependencies with `npm install`. 
+
+#### Syntax
+
+Rules
+* `A>B` means A follows B
+* `B<A` means B flees A
+* `A+B` means A creates B
+* `A-B` means A eats B
+* `,` to enumerate multiple cells
+
+Values
+* `A$100` set A population to 100
+* `E?64` set E perception radius to 100
+
+Other
+* `;` to separate expressions 
+* `#` add comment, ignored line  
+
+Here is an example for the ruleset `A follows B, B follows C, C follows A, C flees B`
+```
+A>B;B>C;C>A;C<B;
+```
+
+Here is another example for the ruleset `A follows B, A eats B, B follows C and A, C creates B`
+```
+A>B;A-B;B>C,A;C+B;
+```
+
+<br/>
+
+#### Use your rules
+
+Write the rule in the input element at the top of the page and click `Run`.
+You can find the compiled version of your rules in the browser's console, the compiled version allows for more customization.
+
+
+### JS rule set
+
 Change the `rules/rules.js`.
 Here is a simple example for `A>B;B<A` (A follows B, B flees A)
+
 ```js
 let ruleset = {
   A: {
@@ -56,7 +105,7 @@ let ruleset = parseRuletext('A>B;');
 start(ruleset);
 ```
 
-<br/>
+<br/><br/><br/>
 
 ### Interesting rule sets
 
