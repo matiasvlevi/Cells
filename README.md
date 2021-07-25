@@ -8,7 +8,7 @@ Rules can be modified.
 
 ## Run
 
-* Open `index.html` or click [this link](https://raw.githack.com/matiasvlevi/Cells/0.0.1/index.html)
+* Open `index.html` or click [this link](https://raw.githack.com/matiasvlevi/Cells/master/index.html)
 
 <br/>
 
