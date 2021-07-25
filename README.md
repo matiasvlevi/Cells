@@ -8,14 +8,14 @@ Rules can be modified.
 
 ## Run
 
-* Open `index.html` or click [this link](https://raw.githack.com/matiasvlevi/Cells/0.0.1/index.html)
+* Open `index.html` or click [this link](https://raw.githack.com/matiasvlevi/Cells/master/index.html)
 
 <br/>
 
 ## Ruleset
 The cells follow a certain ruleset to enable their behaviour. Rules can be broken down into two behaviors, follow, flee, create or eat.
 
-[Here]() is how you can create your own ruleset
+[Here](https://github.com/matiasvlevi/Cells/tree/master/rules) is how you can create your own ruleset
 
 <br/>
 
