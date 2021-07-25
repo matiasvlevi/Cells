@@ -1,24 +1,22 @@
 class Cell {
   constructor(x, y, type, rules_) {
-    let m = 0;
     this.pos = createVector(x, y);
     this.acc = createVector(0, 0);
     this.vel = createVector(0, 0);
 
     this.timeOff = 0;
-
-    this.hungerDelay = random(80, 120);
     this.hunger = 0;
 
     this.des = createVector(0, 0);
     this.size = cellSize;
     this.separation = this.size + 1;
 
+    this.hungerDelay = 500;
     this.maxForce = rules_[type].acc || maxForce;
     this.maxVelocity = rules_[type].vel || maxVel;
 
     this.type = type;
-    this.id = '#' + JSON.stringify(round(random(1000000, 9999999)));
+    this.id = '#' + JSON.stringify(round(random(10000000, 99999999)));
 
     this.state = 'Living';
     this.perception = rules_[type].perception || this.size * 2;
@@ -26,8 +24,6 @@ class Cell {
     this.heartbeat = 0;
     this.freq = random(rules_[type].heartbeat[0] || 40, rules_[type].heartbeat[1] || 50);
     this.amp = 1;
-
-    let ran = floor(random(0, 3));
 
 
     if (rules_[type].color === undefined) {
@@ -79,8 +75,6 @@ class Cell {
 
       if (other.id !== this.id && d < perceptionRadius) {
         let diff = p5.Vector.sub(this.pos, other.pos);
-        //diff.mult(Math.sqrt(d));
-        //console.log(this)
         steering.add(diff);
         total++;
       }
@@ -99,8 +93,6 @@ class Cell {
     for (let rule in rules) {
       if (rule === this.type) {
         let r = ruleset[this.type];
-
-        // let closest = this.allInProximity(others, this.perception);
         let closest;
         // Handle follow rule
         if (r.follow !== undefined) {
@@ -159,37 +151,30 @@ class Cell {
               let m = 100000;
               this.acc.add(random(-m, m), random(-m, m));
               let oldpos = this.pos;
-              //this.update(time, i);
 
               others[type].push(new Cell(oldpos.x + (Math.floor(random(-1, 1)) * this.size / 2), oldpos.y + (Math.floor(random(-1, 1)) * this.size / 2), type, rules));
               count++;
 
             }
-
-
-
           }
-          if (count >= r.create.length - 1) {
+          if (count >= r.create.length) {
             this.timeOff = 0;
+            count = 0;
           }
           this.timeOff++;
         }
         if (r.kill !== undefined) {
-          // Handle create rule
+          // Handle kill rule
           for (let c = 0; c < r.kill.length; c++) {
             let type = r.kill[c].type;
             this.hungerDelay = r.kill[c].rate;
-            closest = this.allInProximity(others[type], this.size / 2 + 2);
+            closest = this.allInProximity(others[type], this.size + 45);
+
             for (let j = 0; j < closest.length; j++) {
               let cell = closest[j];
-
               if (type === cell.type) {
-
                 // Kil/ eat cell
                 if (this.hunger >= this.hungerDelay) {
-                  let m = 10;
-                  this.acc.add(random(-m, m), random(-m, m));
-
                   cell.state = 'DEAD';
                   this.hunger = 0;
                 }
@@ -202,29 +187,21 @@ class Cell {
         }
       }
     }
-    //this.update(time, i);
 
   }
   checkState(i, count) {
     let margin = 0;
     if (this.pos.x <= -wnx / 2 + margin) {
-      //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
       count++;
     } else if (this.pos.x >= wnx / 2 - margin) {
-      //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
-      //this.pos.x = -wnx / 2 + margin * 2;
       count++;
     } else if (this.pos.y <= -wny / 2 + margin) {
-      //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
-      //this.pos.y = wny / 2 - margin * 2;
       count++;
     } else if (this.pos.y >= wny / 2 - margin) {
-      //cells[this.type].splice(i, 1);
       this.state = 'DEAD';
-      //this.pos.y = -wny / 2 + margin * 2;
       count++;
     }
     return count++;
