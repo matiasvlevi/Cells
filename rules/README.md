@@ -20,7 +20,7 @@ You can parse such files by placing them in `rules/ruletext_samples` by running 
 
 Be sure that you installed dependencies with `npm ci`. 
 
-#### Syntax
+### Syntax
 
 Rules
 * `A>B` means A follows B
