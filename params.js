@@ -1,17 +1,17 @@
 // ----- PARAMETERS -----
 
 // Spawn area bounds 
-let sy = 430;
-let sx = 430;
+let sy = 400;
+let sx = 400;
 
 // Cell size (diameter)
-let cellSize = 6;
+let cellSize = 3;
 
 // Cell separation (collision radius)
 let separation = cellSize + 1;
 
 // Cell population for each type
-let population = 45;
+let population = 60;
 
 // Hearbeat is an array of two values representing minimum heartbeat rate & maximum heartbeatrate
 // See rules/rules.js to change for each individual cell
