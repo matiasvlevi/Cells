@@ -37,6 +37,8 @@ Other
 * `;` to separate expressions 
 * `#` add comment, ignored line  
 
+<br/>
+
 Here is an example for the ruleset `A follows B, B follows C, C follows A, C flees B`
 ```
 A>B;B>C;C>A;C<B;
