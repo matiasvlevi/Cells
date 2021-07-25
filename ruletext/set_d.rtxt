@@ -1,0 +1,40 @@
+
+# Set D
+
+# Population
+A$32;
+B$48;
+C$24;
+D$64;
+E$56;
+F$48;
+
+# Perception radius
+A?48;
+B?32;
+C?72;
+D?24;
+E?64;
+F?48;
+
+# Rules
+A>A;
+B<A;
+C>A;
+B>C,D;
+
+B-D;
+
+D>C; 
+
+C+D;  # cell C births cell D 
+
+E>B,F;
+E<A;
+F>C,A,B;
+
+F-B;  # cell F eats cell B
+
+G<A;
+G>F,D,C;
+G-D;
