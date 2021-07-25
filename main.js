@@ -14,8 +14,9 @@ let g;
 
 function setup() {
   createCanvas(wnx, wny);
-  reset(ruleset);
   g = new Graph(-wnx / 2, -wny / 2, population * 2);
+  reset(ruleset);
+
 }
 
 let statTimer = 0;
