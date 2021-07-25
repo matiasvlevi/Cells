@@ -15,7 +15,7 @@ Rules can be modified.
 ## Ruleset
 The cells follow a certain ruleset to enable their behaviour. Rules can be broken down into two behaviors, follow, flee, create or eat.
 
-[Here]() is how you can create your own ruleset
+[Here](https://github.com/matiasvlevi/Cells/tree/master/rules) is how you can create your own ruleset
 
 <br/>
 
