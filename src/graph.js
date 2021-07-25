@@ -16,6 +16,10 @@ class Graph {
       this.values[name].push(val);
     }
   }
+  clear() {
+    this.values = {};
+    this.colors = {};
+  }
   render() {
     push();
     fill(0, 0, 0, 100);
