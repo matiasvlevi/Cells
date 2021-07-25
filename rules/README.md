@@ -16,9 +16,9 @@ You can either write one with Ruletext or JSON.
 Ruletext is a simple language to express cell rules.
 A Ruletext file has the `.rtxt` extension.
 
-You can parse such files by placing them in `ruletext/` by running `npm run tojson [name of file]` or `npm run tostr [name of file]`.
+You can parse such files by placing them in `rules/ruletext_samples` by running `npm run tojson [name of file]` or `npm run tostr [name of file]`.
 
-Be sure that you installed dependencies with `npm install`. 
+Be sure that you installed dependencies with `npm ci`. 
 
 #### Syntax
 
